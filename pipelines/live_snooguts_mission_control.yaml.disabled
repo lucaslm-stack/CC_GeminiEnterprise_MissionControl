@@ -1,0 +1,26 @@
+pipeline:
+  name: "Snooguts Mission Control Ingestion"
+  type: "document"
+  fetcher:
+    class: "src.bigquery.fetchers.BigQuerySnoogutsFetcher"
+    params:
+      project_id: "your-project-id"
+      dataset_id: "your_dataset_id"
+      tables: ["initiatives", "commitments", "launches", "person", "user"]
+  transformers:
+    - class: "src.bigquery.transformers.SnoogutsTransformer"
+      params:
+        datasource: "snoogutsmissioncontrol"
+  uploader:
+    class: "src.core.gcp_uploaders.GoogleCloudDiscoveryEngineDocumentUploader"
+    params:
+      project_id: "your-project-id"
+      data_store_id: "snooguts-ds"
+      location: "global"
+      branch_id: "default_branch"
+      gcs_bucket: "your-gcs-bucket"
+
+deployment:
+  job_name: "snooguts-mission-control-sync"
+  cron_schedule: "0 * * * *"
+  reconciliation_mode: "INCREMENTAL"

@@ -1,0 +1,31 @@
+groups:
+  admins:
+    - "admin@rrolando.altostrat.com"
+  engineers:
+    - "sandra_martinez@rrolando.altostrat.com"
+    - "gabriel_sanchez@rrolando.altostrat.com"
+
+mappings:
+  # 1. Admin group + Sandra specifically
+  - repository: "MyReddit/gep-custom-connectors"
+    permissions:
+      groups:
+        - admins
+      emails:
+        - "sandra_martinez@rrolando.altostrat.com"
+
+  # 2. Engineer group only (Sandra & Gabriel)
+  - repository: "MyReddit/test_bot"
+    permissions:
+      groups:
+        - engineers
+
+  # 3. Public access (allUsers)
+  - repository: "MyReddit/gangplank-demo"
+    isPublic: true
+
+  # 4. Catch-all fallback for other repos (admins only)
+  - repository: "*"
+    permissions:
+      groups:
+        - admins

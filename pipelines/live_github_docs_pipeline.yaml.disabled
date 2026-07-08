@@ -1,0 +1,44 @@
+pipeline:
+  name: "GHES Public Documentation Ingestion"
+  type: "document"
+  fetcher:
+    class: "src.github.fetchers.GitHubRepositoryFileFetcher"
+    params:
+      app_id: "6"
+      installation_id: "1"
+      repos:
+        - "^MyReddit/.*"
+        - "^MyReddit/.*:gh-pages"
+      base_url: "https://001070.xyz/api/v3"
+      private_key_secret_name: "projects/735732561014/secrets/ghes-app-private-key/versions/latest"
+      exclude_extensions: [".png", ".jpg", ".zip", ".gz", ".lock"]
+      exclude_paths: ["node_modules/", ".venv/", ".git/", "dist/", "build/"]
+  transformers:
+    - class: "src.github.transformers.GitHubFileTransformer"
+      params:
+        app_id: "6"
+        installation_id: "1"
+        base_url: "https://001070.xyz/api/v3"
+        private_key_secret_name: "projects/735732561014/secrets/ghes-app-private-key/versions/latest"
+        enterprise_slug: "MyReddit"
+        is_public: true
+        identity_mapper:
+          class: "src.github.identity.GitHubCommitMiningIdentityMapper"
+  uploader:
+    class: "src.core.gcp_uploaders.GoogleCloudDiscoveryEngineDocumentUploader"
+    params:
+      project_id: "rrolando-agentspace-3245"
+      data_store_id: "github-data-acl-45684"
+      location: "global"
+      branch_id: "default_branch"
+      gcs_bucket: "run-sources-rrolando-agentspace-3245-us-central1"
+deployment:
+  job_name: "github-files-sync"
+  cron_schedule: "0 2 * * *"
+  reconciliation_mode: "INCREMENTAL"
+  secret_accessor_ids:
+    - "projects/735732561014/secrets/ghes-app-private-key/versions/latest"
+  env_vars:
+    GITHUB_PRIVATE_KEY_SECRET: "projects/735732561014/secrets/ghes-app-private-key/versions/latest"
+    GITHUB_APP_ID: "6"
+    GITHUB_INSTALLATION_ID: "1"

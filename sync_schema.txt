@@ -1,0 +1,214 @@
+1) Bulk document sync (cron job)
+--------------------------------
+
+Payload shape:
+{
+  "uploadId": string (uuid),
+  "datasource": "snoogutsmissioncontrol",
+  "documents": [Document, ...],          # batched, size <= 10
+  "forceRestartUpload": boolean,              # true only on first page
+  "isFirstPage": boolean,                     # true only on first page
+  "isLastPage": boolean                       # true only on final page
+}
+
+Bulk object types uploaded:
+- "OrgData" (from Position records)
+- "Initiatives" (from Program records)
+- "Commitments" (from StrategicCommitmentsItem records)
+- "Launches" (from Launch records)
+
+Cron flow:
+- OrgData uploaded first
+- Initiatives uploaded second
+- Commitments uploaded third
+- Launches uploaded fourth
+- Referenced users are separately indexed through /indexuser during initiative/commitment/launch batches
+
+
+2) Single-document sync (event-driven updates)
+----------------------------------------------
+
+Payload shape:
+{
+  "document": Document
+}
+
+Supported document ids and prefixes:
+- initiative-{program_id}
+- commitment-{strategic_commitment_id}
+- launch-{launch_id}
+- person-{position_id}
+
+
+3) Document delete sync (event-driven deletes/archives)
+-------------------------------------------------------
+Endpoint used:
+- POST /api/index/v1/deletedocument
+
+Payload shape:
+{
+  "datasource": "snoogutsmissioncontrol",
+  "id": string  # one of the prefixed ids listed above
+}
+
+
+4) User indexing sync (referenced users)
+----------------------------------------
+
+Payload shape:
+{
+  "version": 0,
+  "datasource": "snoogutsmissioncontrol",
+  "user": {
+    "email": string,
+    "userId": string,     # same value as email
+    "name": string,
+    "isActive": boolean
+  }
+}
+
+When user indexing is triggered:
+- During initiative/commitment/launch sync:
+  - author email
+  - permissions.allowedUsers emails (when present)
+- De-duplicated in-process via INDEXED_USERS set
+
+
+5) Common Document structure
+---------------------------------
+All document object types share this base shape:
+
+{
+  "datasource": "snoogutsmissioncontrol",
+  "objectType": "Initiatives" | "Commitments" | "Launches" | "OrgData",
+  "id": string,
+  "title": string,
+  "body": {
+    "mimeType": "text/plain",
+    "textContent": string
+  },
+  "viewURL": string,
+  "createdAt": integer | null,   # epoch seconds
+  "updatedAt": integer | null,   # epoch seconds
+  "permissions": {
+    "allowAnonymousAccess": boolean,
+    "allowedUsers"?: [{ "email": string }, ...],
+    "allowedGroups"?: [{ "id": string }, ...]
+  },
+  "customProperties": [{ "name": string, "value": any }, ...],
+  "author": { "email": string },
+  "interactions"?: {
+    "numLikes": integer,
+    "numComments": integer,
+    "numViews": integer
+  }
+}
+
+Permissions behavior from mapper:
+- allowAnonymousAccess is true when source private flag is missing/false
+- allowAnonymousAccess is false when source private flag is true
+- allowedUsers is only included when:
+  - private is true, and
+  - allowed_users has at least one email
+- allowedGroups exists in mapper support but is not currently populated by this sync path
+
+Custom properties behavior:
+- properties are included only when their mapped value is truthy
+- empty strings/lists/null values are omitted
+
+
+6) Initiatives document schema
+------------------------------
+objectType: "Initiatives"
+id format: "initiative-{program_id}"
+viewURL format: "https://launch.snooguts.net/programs/{program_id}"
+author email source:
+- program owner email, or fallback "mission.control.internal.user@reddit.com"
+
+customProperties names and value types:
+- startDate: string
+- endDate: string
+- programStatus: string
+- hierarchyTeam: string (JSON-encoded array)
+- statusLogsJSONString: string (JSON-encoded array)
+- linksJSONString: string (JSON-encoded array)
+- decisionsJSONString: string (JSON-encoded array)
+- activeQuarters: array[string]
+- primaryPillar: string
+- linkedLaunchIds: array[string]          # launch-{id}
+- linkedCommitmentIds: array[string]      # commitment-{id}
+- risksJsonString: string (JSON-encoded array)
+- resourcesJsonString: string (JSON-encoded array)
+
+
+7) Commitments document schema
+------------------------------
+objectType: "Commitments"
+id format: "commitment-{strategic_commitment_id}"
+viewURL format: "https://launch.snooguts.net/commitment/{strategic_commitment_id}"
+author email source:
+- sc owner email, or fallback "mission.control.internal.user@reddit.com"
+
+customProperties names and value types:
+- responsibleUser: string
+- accountableUser: string
+- quarter: string                 # format Q{quarter}-{year}
+- pillar: string
+- commitmentStatus: array[string]
+- isClosedOut: string             # "True" / "False"
+- statusHistoryJsonString: string (JSON-encoded array)
+
+Additional notes:
+- records without a resolvable parent pillar are skipped (not sent)
+
+
+8) Launches document schema
+---------------------------
+objectType: "Launches"
+id format: "launch-{launch_id}"
+viewURL format: "https://launch.snooguts.net/launch/{launch_id}"
+author email source:
+- launch owner email, or fallback "mission.control.internal.user@reddit.com"
+
+customProperties names and value types:
+- reviewsJsonString: array[string]    # array with one JSON stringified review list
+- launchDate: string                  # ISO-8601 from launch end_date
+- committedQuarter: string            # mapped if present
+- commitmentID: string                # JSON-encoded list of commitment-{id}
+- platforms: array[string]
+- productSurfaces: array[string]
+- pillars: array[string]
+- links: array[string]                # each element is JSON-encoded link object
+- statusLogsJsonString: string (JSON-encoded array)
+
+Important current-behavior note:
+- launch formatter provides "subpillars", but mapper expects "pillars"
+- result: "pillars" custom property is currently omitted unless mapper input changes
+
+
+9) OrgData (Users) document schema
+--------------------------
+objectType: "OrgData"
+id format: "person-{position_id}"
+viewURL format: "https://launch.snooguts.net/org?u={employee_id}"
+author email source:
+- employee email
+
+customProperties names and value types:
+- managerEmail: string
+- directorEmail: string
+- executiveEmail: string
+- function: string
+- specialties: array[string]
+- pillar: string
+- email: string
+- displayName: string
+- positionId: integer | string
+- positionStatus: string
+- employeeId: string
+- level: string
+- hierarchyTeam: string
+- assignedToTeam: string
+
+permissions:
+- currently maps to allowAnonymousAccess=true (no private field passed in org mapper)

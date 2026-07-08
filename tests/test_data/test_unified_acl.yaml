@@ -1,0 +1,20 @@
+groups:
+  mygroup1:
+    - "email1@email.com"
+    - "email2@email.com"
+  mygroup2:
+    - "default-audit@email.com"
+
+mappings:
+  - repository: "MyReddit/repo-1"
+    permissions:
+      groups:
+        - mygroup1
+      emails:
+        - "extra@email.com"
+  - repository: "MyReddit/repo-public"
+    isPublic: true
+  - repository: "*"
+    permissions:
+      groups:
+        - mygroup2

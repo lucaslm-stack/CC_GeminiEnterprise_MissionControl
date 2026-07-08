@@ -1,0 +1,387 @@
+[
+  {
+    "scenario": "initiative_private_full",
+    "entityType": "initiative",
+    "id": 101,
+    "title": "Project Redwood Expansion",
+    "description": "Expand Redwood capabilities for Q4 beta.",
+    "url": "https://launch.snooguts.net/programs/101",
+    "createdAt": 1762064400,
+    "updatedAt": 1762676400,
+    "private": true,
+    "allowedUsers": [
+      "lead.one@example.com",
+      "exec.one@example.com"
+    ],
+    "ownerEmail": "lead.one@example.com",
+    "startDate": "2026-10-01",
+    "endDate": "2027-01-31",
+    "programStatus": "AT_RISK",
+    "hierarchyTeam": [
+      "Core Discovery",
+      "Feed Platform"
+    ],
+    "statusLogs": [
+      {
+        "status": "AT_RISK",
+        "created_at": "2026-11-01T16:00:00Z",
+        "status_description": "Dependency blocked",
+        "ptg": "Resolve auth dependency"
+      }
+    ],
+    "links": [
+      {
+        "address": "https://example.com/doc/redwood",
+        "name": "Spec"
+      }
+    ],
+    "decisions": [
+      {
+        "decision": "Use staged rollout",
+        "status": "APPROVED",
+        "decision_outcome": "Lower risk"
+      }
+    ],
+    "activeQuarters": [
+      "Q4-2026",
+      "Q1-2027"
+    ],
+    "primaryPillar": "Growth",
+    "linkedLaunchIds": [
+      "launch-801",
+      "launch-802"
+    ],
+    "linkedCommitmentIds": [
+      "commitment-501"
+    ],
+    "risks": [
+      {
+        "risk": "Auth service throughput",
+        "level": "HIGH",
+        "status": "OPEN",
+        "resolution": "Capacity test"
+      }
+    ],
+    "resources": [
+      {
+        "email": "staff.engineer@example.com",
+        "allocation": 50
+      }
+    ]
+  },
+  {
+    "scenario": "initiative_public_minimal",
+    "entityType": "initiative",
+    "id": 102,
+    "title": "Lightweight Metrics Cleanup",
+    "description": "",
+    "url": "https://launch.snooguts.net/programs/102",
+    "createdAt": 1762150800,
+    "updatedAt": 1762237200,
+    "private": false,
+    "allowedUsers": [],
+    "ownerEmail": "mission.control.internal.user@reddit.com",
+    "programStatus": "NOT_STARTED",
+    "activeQuarters": [
+      "Q4-2026"
+    ]
+  },
+  {
+    "scenario": "commitment_private_at_risk",
+    "entityType": "commitment",
+    "id": 501,
+    "title": "Ship baseline safety tooling",
+    "description": "Ship baseline safety tooling",
+    "url": "https://launch.snooguts.net/commitment/501",
+    "createdAt": 1761891600,
+    "updatedAt": 1762586400,
+    "private": true,
+    "allowedUsers": [
+      "owner.commitment@example.com",
+      "accountable.commitment@example.com"
+    ],
+    "ownerEmail": "owner.commitment@example.com",
+    "responsibleUser": "responsible.commitment@example.com",
+    "accountableUser": "accountable.commitment@example.com",
+    "quarter": "Q4-2026",
+    "pillar": "Trust",
+    "commitmentStatus": "AT_RISK",
+    "isClosedOut": false,
+    "statusHistory": [
+      {
+        "status": "AT_RISK",
+        "created_at": "2026-11-05T09:00:00Z",
+        "readout": "Milestone delayed"
+      }
+    ],
+    "interactions": {
+      "numLikes": 40321,
+      "numComments": 29876,
+      "numViews": 71543
+    }
+  },
+  {
+    "scenario": "commitment_public_closed_out",
+    "entityType": "commitment",
+    "id": 502,
+    "title": "Complete migration runbook",
+    "description": "Complete migration runbook",
+    "url": "https://launch.snooguts.net/commitment/502",
+    "createdAt": 1761978000,
+    "updatedAt": 1762064400,
+    "private": false,
+    "allowedUsers": [],
+    "ownerEmail": "mission.control.internal.user@reddit.com",
+    "quarter": "Q4-2026",
+    "commitmentStatus": "NOT_STARTED",
+    "isClosedOut": true,
+    "interactions": {
+      "numLikes": 26754,
+      "numComments": 25300,
+      "numViews": 33821
+    }
+  },
+  {
+    "scenario": "launch_private_full",
+    "entityType": "launch",
+    "id": 801,
+    "title": "Realtime Ranking Rollout",
+    "description": "Rollout of realtime ranking to 25 percent traffic.",
+    "url": "https://launch.snooguts.net/launch/801",
+    "createdAt": 1761722400,
+    "updatedAt": 1762669200,
+    "private": true,
+    "allowedUsers": [
+      "owner.launch@example.com",
+      "reviewer.security@example.com"
+    ],
+    "ownerEmail": "owner.launch@example.com",
+    "reviews": [
+      {
+        "status": "APPROVED",
+        "jira_url": "https://jira.example.com/SEC-123",
+        "assigned_reviewer": "reviewer.security@example.com",
+        "review_type": "SECURITY"
+      }
+    ],
+    "launchDate": "2026-12-15T00:00:00+00:00",
+    "commitmentIds": [
+      "commitment-501",
+      "commitment-502"
+    ],
+    "platforms": [
+      "iOS",
+      "Android",
+      "Web"
+    ],
+    "productSurfaces": [
+      "Home Feed",
+      "Popular"
+    ],
+    "links": [
+      {
+        "url": "https://example.com/launch/plan",
+        "name": "Plan"
+      },
+      {
+        "url": "https://example.com/launch/metrics",
+        "name": "Metrics"
+      }
+    ],
+    "statusLogs": [
+      {
+        "status": "ON_TRACK",
+        "created_at": "2026-11-08T18:30:00Z",
+        "status_description": "Traffic gate cleared"
+      }
+    ],
+    "interactions": {
+      "numLikes": 70899,
+      "numComments": 39111,
+      "numViews": 74420
+    }
+  },
+  {
+    "scenario": "launch_public_minimal",
+    "entityType": "launch",
+    "id": 802,
+    "title": "Control Plane Cleanup",
+    "description": "",
+    "url": "https://launch.snooguts.net/launch/802",
+    "createdAt": 1761723000,
+    "updatedAt": 1761723600,
+    "private": false,
+    "allowedUsers": [],
+    "ownerEmail": "mission.control.internal.user@reddit.com",
+    "reviews": [],
+    "commitmentIds": [],
+    "interactions": {
+      "numLikes": 26012,
+      "numComments": 31780,
+      "numViews": 50912
+    }
+  },
+  {
+    "scenario": "person_full",
+    "entityType": "person",
+    "id": 9001,
+    "title": "engineer.one@example.com",
+    "description": "Profile for Engineer One.",
+    "url": "https://launch.snooguts.net/org?u=12345",
+    "createdAt": 1759294800,
+    "updatedAt": 1762586400,
+    "private": false,
+    "allowedUsers": [],
+    "ownerEmail": "engineer.one@example.com",
+    "managerEmail": "manager.one@example.com",
+    "directorEmail": "director.one@example.com",
+    "executiveEmail": "vp.one@example.com",
+    "function": "Engineering",
+    "specialties": [
+      "Python",
+      "Systems Design"
+    ],
+    "pillar": "Infrastructure",
+    "email": "engineer.one@example.com",
+    "displayName": "Engineer One",
+    "positionId": 9001,
+    "positionStatus": "ACTIVE",
+    "employeeId": "E12345",
+    "level": "L5",
+    "hierarchyTeam": "Realtime Infra",
+    "assignedToTeam": "Latency Reduction",
+    "interactions": {
+      "numLikes": 48980,
+      "numComments": 30115,
+      "numViews": 60200
+    }
+  },
+  {
+    "scenario": "initiative_update",
+    "entityType": "initiative",
+    "action": "update",
+    "id": 101,
+    "title": "Project Redwood Expansion",
+    "description": "Updated initiative summary for latest planning cycle.",
+    "url": "https://launch.snooguts.net/programs/101",
+    "createdAt": 1762064400,
+    "updatedAt": 1762762800,
+    "private": true,
+    "allowedUsers": [
+      "lead.one@example.com"
+    ],
+    "ownerEmail": "lead.one@example.com",
+    "programStatus": "ON_TRACK"
+  },
+  {
+    "scenario": "commitment_update",
+    "entityType": "commitment",
+    "action": "update",
+    "id": 501,
+    "title": "Ship baseline safety tooling",
+    "description": "Ship baseline safety tooling",
+    "url": "https://launch.snooguts.net/commitment/501",
+    "createdAt": 1761891600,
+    "updatedAt": 1762762800,
+    "private": false,
+    "allowedUsers": [],
+    "ownerEmail": "owner.commitment@example.com",
+    "commitmentStatus": "ON_TRACK",
+    "interactions": {
+      "numLikes": 35000,
+      "numComments": 29000,
+      "numViews": 50000
+    }
+  },
+  {
+    "scenario": "launch_update",
+    "entityType": "launch",
+    "action": "update",
+    "id": 801,
+    "title": "Realtime Ranking Rollout",
+    "description": "Updated launch state after gate review.",
+    "url": "https://launch.snooguts.net/launch/801",
+    "createdAt": 1761722400,
+    "updatedAt": 1762762800,
+    "private": true,
+    "allowedUsers": [
+      "owner.launch@example.com"
+    ],
+    "ownerEmail": "owner.launch@example.com",
+    "launchDate": "2026-12-20T00:00:00+00:00",
+    "statusLogs": [
+      {
+        "status": "ON_TRACK",
+        "created_at": "2026-11-10T10:00:00Z"
+      }
+    ],
+    "interactions": {
+      "numLikes": 61000,
+      "numComments": 40200,
+      "numViews": 73000
+    }
+  },
+  {
+    "scenario": "person_update",
+    "entityType": "person",
+    "action": "update",
+    "id": 9001,
+    "title": "engineer.one@example.com",
+    "description": "Profile for Engineer One.",
+    "url": "https://launch.snooguts.net/org?u=12345",
+    "createdAt": 1759294800,
+    "updatedAt": 1762762800,
+    "private": false,
+    "allowedUsers": [],
+    "ownerEmail": "engineer.one@example.com",
+    "function": "Engineering",
+    "level": "L6",
+    "interactions": {
+      "numLikes": 42000,
+      "numComments": 27000,
+      "numViews": 59000
+    }
+  },
+  {
+    "scenario": "initiative_delete",
+    "entityType": "initiative",
+    "action": "delete",
+    "id": 101
+  },
+  {
+    "scenario": "commitment_delete",
+    "entityType": "commitment",
+    "action": "delete",
+    "id": 501
+  },
+  {
+    "scenario": "launch_delete",
+    "entityType": "launch",
+    "action": "delete",
+    "id": 801
+  },
+  {
+    "scenario": "person_delete",
+    "entityType": "person",
+    "action": "delete",
+    "id": 9001
+  },
+  {
+    "scenario": "indexed_active_user",
+    "entityType": "user",
+    "id": "lead.one@example.com",
+    "email": "lead.one@example.com",
+    "userId": "lead.one@example.com",
+    "name": "Lead One",
+    "isActive": true
+  },
+  {
+    "scenario": "indexed_inactive_user",
+    "entityType": "user",
+    "id": "former.user@example.com",
+    "email": "former.user@example.com",
+    "userId": "former.user@example.com",
+    "name": "Former User",
+    "isActive": false
+  }
+]

@@ -1,0 +1,2 @@
+{"scenario": "indexed_active_user", "entityType": "user", "id": "lead.one@example.com", "email": "lead.one@example.com", "userId": "lead.one@example.com", "name": "Lead One", "isActive": true}
+{"scenario": "indexed_inactive_user", "entityType": "user", "id": "former.user@example.com", "email": "former.user@example.com", "userId": "former.user@example.com", "name": "Former User", "isActive": false}

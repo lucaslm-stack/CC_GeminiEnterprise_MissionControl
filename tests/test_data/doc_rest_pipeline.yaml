@@ -1,0 +1,20 @@
+pipeline:
+  name: "Mock Legacy REST Document Sync"
+  type: "document"
+  fetcher:
+    class: "src.mock.mock_fetchers.MockRESTFetcher"
+    params:
+      data_dir: "src/mock/mock_data"
+      base_url: "https://legacy.internal/api/v1/docs"
+  transformers:
+    - class: "src.mock.mock_transformers.RESTDocumentTransformer"
+  uploader:
+    class: "src.mock.mock_uploaders.LocalNDJSONDocumentUploader"
+    params:
+      output_dir: "out"
+      filename: "rest_ingested_documents.jsonl"
+
+deployment:
+  job_name: "mock-rest-sync"
+  cron_schedule: "0 3 * * *"
+  reconciliation_mode: "FULL"

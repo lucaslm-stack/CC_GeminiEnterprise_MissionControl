@@ -1,0 +1,26 @@
+pipeline:
+  name: "Snooguts Mock Ingestion Test"
+  type: "document"
+  fetcher:
+    class: "src.bigquery.fetchers.BigQuerySnoogutsFetcher"
+    params:
+      project_id: "creativestudiotest-492015"
+      dataset_id: "snooguts_mock"
+      tables: ["initiatives", "commitments", "launches", "person", "user"]
+  transformers:
+    - class: "src.bigquery.transformers.SnoogutsTransformer"
+      params:
+        datasource: "snoogutsmissioncontrol"
+  uploader:
+    class: "src.core.gcp_uploaders.GoogleCloudDiscoveryEngineDocumentUploader"
+    params:
+      project_id: "creativestudiotest-492015"
+      data_store_id: "snooguts-ds-v4"
+      location: "global"
+      branch_id: "default_branch"
+      gcs_bucket: "cc-mission-control"
+
+deployment:
+  job_name: "snooguts-mock-test-sync"
+  cron_schedule: "0 * * * *"
+  reconciliation_mode: "INCREMENTAL"

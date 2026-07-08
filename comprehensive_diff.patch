@@ -1,0 +1,1307 @@
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/mock_data.json /home/admin_/pruebasCC/gep-custom-connectors/mock_data.json
+--- /tmp/original_extract/gep-custom-connectors/mock_data.json	1970-01-01 00:00:00.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/mock_data.json	2026-07-01 13:52:52.165714853 +0000
+@@ -0,0 +1,387 @@
++[
++  {
++    "scenario": "initiative_private_full",
++    "entityType": "initiative",
++    "id": 101,
++    "title": "Project Redwood Expansion",
++    "description": "Expand Redwood capabilities for Q4 beta.",
++    "url": "https://launch.snooguts.net/programs/101",
++    "createdAt": 1762064400,
++    "updatedAt": 1762676400,
++    "private": true,
++    "allowedUsers": [
++      "lead.one@example.com",
++      "exec.one@example.com"
++    ],
++    "ownerEmail": "lead.one@example.com",
++    "startDate": "2026-10-01",
++    "endDate": "2027-01-31",
++    "programStatus": "AT_RISK",
++    "hierarchyTeam": [
++      "Core Discovery",
++      "Feed Platform"
++    ],
++    "statusLogs": [
++      {
++        "status": "AT_RISK",
++        "created_at": "2026-11-01T16:00:00Z",
++        "status_description": "Dependency blocked",
++        "ptg": "Resolve auth dependency"
++      }
++    ],
++    "links": [
++      {
++        "address": "https://example.com/doc/redwood",
++        "name": "Spec"
++      }
++    ],
++    "decisions": [
++      {
++        "decision": "Use staged rollout",
++        "status": "APPROVED",
++        "decision_outcome": "Lower risk"
++      }
++    ],
++    "activeQuarters": [
++      "Q4-2026",
++      "Q1-2027"
++    ],
++    "primaryPillar": "Growth",
++    "linkedLaunchIds": [
++      "launch-801",
++      "launch-802"
++    ],
++    "linkedCommitmentIds": [
++      "commitment-501"
++    ],
++    "risks": [
++      {
++        "risk": "Auth service throughput",
++        "level": "HIGH",
++        "status": "OPEN",
++        "resolution": "Capacity test"
++      }
++    ],
++    "resources": [
++      {
++        "email": "staff.engineer@example.com",
++        "allocation": 50
++      }
++    ]
++  },
++  {
++    "scenario": "initiative_public_minimal",
++    "entityType": "initiative",
++    "id": 102,
++    "title": "Lightweight Metrics Cleanup",
++    "description": "",
++    "url": "https://launch.snooguts.net/programs/102",
++    "createdAt": 1762150800,
++    "updatedAt": 1762237200,
++    "private": false,
++    "allowedUsers": [],
++    "ownerEmail": "mission.control.internal.user@reddit.com",
++    "programStatus": "NOT_STARTED",
++    "activeQuarters": [
++      "Q4-2026"
++    ]
++  },
++  {
++    "scenario": "commitment_private_at_risk",
++    "entityType": "commitment",
++    "id": 501,
++    "title": "Ship baseline safety tooling",
++    "description": "Ship baseline safety tooling",
++    "url": "https://launch.snooguts.net/commitment/501",
++    "createdAt": 1761891600,
++    "updatedAt": 1762586400,
++    "private": true,
++    "allowedUsers": [
++      "owner.commitment@example.com",
++      "accountable.commitment@example.com"
++    ],
++    "ownerEmail": "owner.commitment@example.com",
++    "responsibleUser": "responsible.commitment@example.com",
++    "accountableUser": "accountable.commitment@example.com",
++    "quarter": "Q4-2026",
++    "pillar": "Trust",
++    "commitmentStatus": "AT_RISK",
++    "isClosedOut": false,
++    "statusHistory": [
++      {
++        "status": "AT_RISK",
++        "created_at": "2026-11-05T09:00:00Z",
++        "readout": "Milestone delayed"
++      }
++    ],
++    "interactions": {
++      "numLikes": 40321,
++      "numComments": 29876,
++      "numViews": 71543
++    }
++  },
++  {
++    "scenario": "commitment_public_closed_out",
++    "entityType": "commitment",
++    "id": 502,
++    "title": "Complete migration runbook",
++    "description": "Complete migration runbook",
++    "url": "https://launch.snooguts.net/commitment/502",
++    "createdAt": 1761978000,
++    "updatedAt": 1762064400,
++    "private": false,
++    "allowedUsers": [],
++    "ownerEmail": "mission.control.internal.user@reddit.com",
++    "quarter": "Q4-2026",
++    "commitmentStatus": "NOT_STARTED",
++    "isClosedOut": true,
++    "interactions": {
++      "numLikes": 26754,
++      "numComments": 25300,
++      "numViews": 33821
++    }
++  },
++  {
++    "scenario": "launch_private_full",
++    "entityType": "launch",
++    "id": 801,
++    "title": "Realtime Ranking Rollout",
++    "description": "Rollout of realtime ranking to 25 percent traffic.",
++    "url": "https://launch.snooguts.net/launch/801",
++    "createdAt": 1761722400,
++    "updatedAt": 1762669200,
++    "private": true,
++    "allowedUsers": [
++      "owner.launch@example.com",
++      "reviewer.security@example.com"
++    ],
++    "ownerEmail": "owner.launch@example.com",
++    "reviews": [
++      {
++        "status": "APPROVED",
++        "jira_url": "https://jira.example.com/SEC-123",
++        "assigned_reviewer": "reviewer.security@example.com",
++        "review_type": "SECURITY"
++      }
++    ],
++    "launchDate": "2026-12-15T00:00:00+00:00",
++    "commitmentIds": [
++      "commitment-501",
++      "commitment-502"
++    ],
++    "platforms": [
++      "iOS",
++      "Android",
++      "Web"
++    ],
++    "productSurfaces": [
++      "Home Feed",
++      "Popular"
++    ],
++    "links": [
++      {
++        "url": "https://example.com/launch/plan",
++        "name": "Plan"
++      },
++      {
++        "url": "https://example.com/launch/metrics",
++        "name": "Metrics"
++      }
++    ],
++    "statusLogs": [
++      {
++        "status": "ON_TRACK",
++        "created_at": "2026-11-08T18:30:00Z",
++        "status_description": "Traffic gate cleared"
++      }
++    ],
++    "interactions": {
++      "numLikes": 70899,
++      "numComments": 39111,
++      "numViews": 74420
++    }
++  },
++  {
++    "scenario": "launch_public_minimal",
++    "entityType": "launch",
++    "id": 802,
++    "title": "Control Plane Cleanup",
++    "description": "",
++    "url": "https://launch.snooguts.net/launch/802",
++    "createdAt": 1761723000,
++    "updatedAt": 1761723600,
++    "private": false,
++    "allowedUsers": [],
++    "ownerEmail": "mission.control.internal.user@reddit.com",
++    "reviews": [],
++    "commitmentIds": [],
++    "interactions": {
++      "numLikes": 26012,
++      "numComments": 31780,
++      "numViews": 50912
++    }
++  },
++  {
++    "scenario": "person_full",
++    "entityType": "person",
++    "id": 9001,
++    "title": "engineer.one@example.com",
++    "description": "Profile for Engineer One.",
++    "url": "https://launch.snooguts.net/org?u=12345",
++    "createdAt": 1759294800,
++    "updatedAt": 1762586400,
++    "private": false,
++    "allowedUsers": [],
++    "ownerEmail": "engineer.one@example.com",
++    "managerEmail": "manager.one@example.com",
++    "directorEmail": "director.one@example.com",
++    "executiveEmail": "vp.one@example.com",
++    "function": "Engineering",
++    "specialties": [
++      "Python",
++      "Systems Design"
++    ],
++    "pillar": "Infrastructure",
++    "email": "engineer.one@example.com",
++    "displayName": "Engineer One",
++    "positionId": 9001,
++    "positionStatus": "ACTIVE",
++    "employeeId": "E12345",
++    "level": "L5",
++    "hierarchyTeam": "Realtime Infra",
++    "assignedToTeam": "Latency Reduction",
++    "interactions": {
++      "numLikes": 48980,
++      "numComments": 30115,
++      "numViews": 60200
++    }
++  },
++  {
++    "scenario": "initiative_update",
++    "entityType": "initiative",
++    "action": "update",
++    "id": 101,
++    "title": "Project Redwood Expansion",
++    "description": "Updated initiative summary for latest planning cycle.",
++    "url": "https://launch.snooguts.net/programs/101",
++    "createdAt": 1762064400,
++    "updatedAt": 1762762800,
++    "private": true,
++    "allowedUsers": [
++      "lead.one@example.com"
++    ],
++    "ownerEmail": "lead.one@example.com",
++    "programStatus": "ON_TRACK"
++  },
++  {
++    "scenario": "commitment_update",
++    "entityType": "commitment",
++    "action": "update",
++    "id": 501,
++    "title": "Ship baseline safety tooling",
++    "description": "Ship baseline safety tooling",
++    "url": "https://launch.snooguts.net/commitment/501",
++    "createdAt": 1761891600,
++    "updatedAt": 1762762800,
++    "private": false,
++    "allowedUsers": [],
++    "ownerEmail": "owner.commitment@example.com",
++    "commitmentStatus": "ON_TRACK",
++    "interactions": {
++      "numLikes": 35000,
++      "numComments": 29000,
++      "numViews": 50000
++    }
++  },
++  {
++    "scenario": "launch_update",
++    "entityType": "launch",
++    "action": "update",
++    "id": 801,
++    "title": "Realtime Ranking Rollout",
++    "description": "Updated launch state after gate review.",
++    "url": "https://launch.snooguts.net/launch/801",
++    "createdAt": 1761722400,
++    "updatedAt": 1762762800,
++    "private": true,
++    "allowedUsers": [
++      "owner.launch@example.com"
++    ],
++    "ownerEmail": "owner.launch@example.com",
++    "launchDate": "2026-12-20T00:00:00+00:00",
++    "statusLogs": [
++      {
++        "status": "ON_TRACK",
++        "created_at": "2026-11-10T10:00:00Z"
++      }
++    ],
++    "interactions": {
++      "numLikes": 61000,
++      "numComments": 40200,
++      "numViews": 73000
++    }
++  },
++  {
++    "scenario": "person_update",
++    "entityType": "person",
++    "action": "update",
++    "id": 9001,
++    "title": "engineer.one@example.com",
++    "description": "Profile for Engineer One.",
++    "url": "https://launch.snooguts.net/org?u=12345",
++    "createdAt": 1759294800,
++    "updatedAt": 1762762800,
++    "private": false,
++    "allowedUsers": [],
++    "ownerEmail": "engineer.one@example.com",
++    "function": "Engineering",
++    "level": "L6",
++    "interactions": {
++      "numLikes": 42000,
++      "numComments": 27000,
++      "numViews": 59000
++    }
++  },
++  {
++    "scenario": "initiative_delete",
++    "entityType": "initiative",
++    "action": "delete",
++    "id": 101
++  },
++  {
++    "scenario": "commitment_delete",
++    "entityType": "commitment",
++    "action": "delete",
++    "id": 501
++  },
++  {
++    "scenario": "launch_delete",
++    "entityType": "launch",
++    "action": "delete",
++    "id": 801
++  },
++  {
++    "scenario": "person_delete",
++    "entityType": "person",
++    "action": "delete",
++    "id": 9001
++  },
++  {
++    "scenario": "indexed_active_user",
++    "entityType": "user",
++    "id": "lead.one@example.com",
++    "email": "lead.one@example.com",
++    "userId": "lead.one@example.com",
++    "name": "Lead One",
++    "isActive": true
++  },
++  {
++    "scenario": "indexed_inactive_user",
++    "entityType": "user",
++    "id": "former.user@example.com",
++    "email": "former.user@example.com",
++    "userId": "former.user@example.com",
++    "name": "Former User",
++    "isActive": false
++  }
++]
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/pipelines/live_github_discussions_pipeline.yaml /home/admin_/pruebasCC/gep-custom-connectors/pipelines/live_github_discussions_pipeline.yaml
+--- /tmp/original_extract/gep-custom-connectors/pipelines/live_github_discussions_pipeline.yaml	2026-06-18 00:19:05.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/pipelines/live_github_discussions_pipeline.yaml	1970-01-01 00:00:00.000000000 +0000
+@@ -1,42 +0,0 @@
+-pipeline:
+-  name: "Reddit Enterprise Discussions Ingestion"
+-  type: "document"
+-  fetcher:
+-    class: "src.github.fetchers.GitHubDiscussionsFetcher"
+-    params:
+-      app_id: "6"
+-      installation_id: "1"
+-      repos:
+-        - "^MyReddit/.*"
+-      base_url: "https://001070.xyz/api/v3"
+-      private_key_secret_name: "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
+-  transformers:
+-    - class: "src.github.transformers.GitHubDiscussionTransformer"
+-      params:
+-        app_id: "6"
+-        installation_id: "1"
+-        base_url: "https://001070.xyz/api/v3"
+-        private_key_secret_name: "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
+-        enterprise_slug: "MyReddit"
+-        identity_mapper:
+-          class: "src.github.identity.GitHubCommitMiningIdentityMapper"
+-  uploader:
+-    class: "src.core.gcp_uploaders.GoogleCloudDiscoveryEngineDocumentUploader"
+-    params:
+-      project_id: "reddit-gep-cc-12378"
+-      data_store_id: "reddit-discussions-ds"
+-      location: "global"
+-      branch_id: "default_branch"
+-      gcs_bucket: "reddit-gep-cc-12378-connector-sources"
+-
+-deployment:
+-  job_name: "reddit-discussions-sync"
+-  cron_schedule: "*/15 * * * *"
+-  reconciliation_mode: "INCREMENTAL"
+-  cache_bucket_name: "reddit-gep-cc-12378-connector-cache"
+-  secret_accessor_ids:
+-    - "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
+-  env_vars:
+-    GITHUB_PRIVATE_KEY_SECRET: "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
+-    GITHUB_APP_ID: "6"
+-    GITHUB_INSTALLATION_ID: "1"
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/pipelines/live_github_discussions_pipeline.yaml.disabled /home/admin_/pruebasCC/gep-custom-connectors/pipelines/live_github_discussions_pipeline.yaml.disabled
+--- /tmp/original_extract/gep-custom-connectors/pipelines/live_github_discussions_pipeline.yaml.disabled	1970-01-01 00:00:00.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/pipelines/live_github_discussions_pipeline.yaml.disabled	2026-06-18 00:19:05.000000000 +0000
+@@ -0,0 +1,42 @@
++pipeline:
++  name: "Reddit Enterprise Discussions Ingestion"
++  type: "document"
++  fetcher:
++    class: "src.github.fetchers.GitHubDiscussionsFetcher"
++    params:
++      app_id: "6"
++      installation_id: "1"
++      repos:
++        - "^MyReddit/.*"
++      base_url: "https://001070.xyz/api/v3"
++      private_key_secret_name: "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
++  transformers:
++    - class: "src.github.transformers.GitHubDiscussionTransformer"
++      params:
++        app_id: "6"
++        installation_id: "1"
++        base_url: "https://001070.xyz/api/v3"
++        private_key_secret_name: "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
++        enterprise_slug: "MyReddit"
++        identity_mapper:
++          class: "src.github.identity.GitHubCommitMiningIdentityMapper"
++  uploader:
++    class: "src.core.gcp_uploaders.GoogleCloudDiscoveryEngineDocumentUploader"
++    params:
++      project_id: "reddit-gep-cc-12378"
++      data_store_id: "reddit-discussions-ds"
++      location: "global"
++      branch_id: "default_branch"
++      gcs_bucket: "reddit-gep-cc-12378-connector-sources"
++
++deployment:
++  job_name: "reddit-discussions-sync"
++  cron_schedule: "*/15 * * * *"
++  reconciliation_mode: "INCREMENTAL"
++  cache_bucket_name: "reddit-gep-cc-12378-connector-cache"
++  secret_accessor_ids:
++    - "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
++  env_vars:
++    GITHUB_PRIVATE_KEY_SECRET: "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
++    GITHUB_APP_ID: "6"
++    GITHUB_INSTALLATION_ID: "1"
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/pipelines/live_github_docs_unified_pipeline.yaml /home/admin_/pruebasCC/gep-custom-connectors/pipelines/live_github_docs_unified_pipeline.yaml
+--- /tmp/original_extract/gep-custom-connectors/pipelines/live_github_docs_unified_pipeline.yaml	2026-06-18 00:19:05.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/pipelines/live_github_docs_unified_pipeline.yaml	1970-01-01 00:00:00.000000000 +0000
+@@ -1,48 +0,0 @@
+-pipeline:
+-  name: "Reddit Unified Documentation Ingestion"
+-  type: "document"
+-  fetcher:
+-    class: "src.github.fetchers.GitHubRepositoryFileFetcher"
+-    params:
+-      app_id: "6"
+-      installation_id: "1"
+-      repos:
+-        - "^MyReddit/.*"
+-        - "^MyReddit/.*:gh-pages"
+-      base_url: "https://001070.xyz/api/v3"
+-      private_key_secret_name: "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
+-      exclude_extensions: [".png", ".jpg", ".zip", ".gz", ".lock"]
+-      exclude_paths: ["node_modules/", ".venv/", ".git/", "dist/", "build/"]
+-  transformers:
+-    - class: "src.github.transformers.GitHubFileTransformer"
+-      params:
+-        app_id: "6"
+-        installation_id: "1"
+-        base_url: "https://001070.xyz/api/v3"
+-        private_key_secret_name: "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
+-        enterprise_slug: "MyReddit"
+-        is_public: false
+-        identity_mapper:
+-          class: "src.github.identity.UnifiedRepositoryIdentityMapper"
+-          params:
+-            config_file: "src/github/identity/basic_mapping/acl.yaml"
+-  uploader:
+-    class: "src.core.gcp_uploaders.GoogleCloudDiscoveryEngineDocumentUploader"
+-    params:
+-      project_id: "rrolando-agentspace-3245"
+-      data_store_id: "reddit-docs-ds"
+-      location: "global"
+-      branch_id: "default_branch"
+-      gcs_bucket: "reddit-gep-cc-12378-connector-sources"
+-
+-deployment:
+-  job_name: "reddit-docs-sync"
+-  cron_schedule: "0 2 * * *"
+-  reconciliation_mode: "INCREMENTAL"
+-  cache_bucket_name: "reddit-gep-cc-12378-connector-cache"
+-  secret_accessor_ids:
+-    - "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
+-  env_vars:
+-    GITHUB_PRIVATE_KEY_SECRET: "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
+-    GITHUB_APP_ID: "6"
+-    GITHUB_INSTALLATION_ID: "1"
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/pipelines/live_github_docs_unified_pipeline.yaml.disabled /home/admin_/pruebasCC/gep-custom-connectors/pipelines/live_github_docs_unified_pipeline.yaml.disabled
+--- /tmp/original_extract/gep-custom-connectors/pipelines/live_github_docs_unified_pipeline.yaml.disabled	1970-01-01 00:00:00.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/pipelines/live_github_docs_unified_pipeline.yaml.disabled	2026-06-18 00:19:05.000000000 +0000
+@@ -0,0 +1,48 @@
++pipeline:
++  name: "Reddit Unified Documentation Ingestion"
++  type: "document"
++  fetcher:
++    class: "src.github.fetchers.GitHubRepositoryFileFetcher"
++    params:
++      app_id: "6"
++      installation_id: "1"
++      repos:
++        - "^MyReddit/.*"
++        - "^MyReddit/.*:gh-pages"
++      base_url: "https://001070.xyz/api/v3"
++      private_key_secret_name: "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
++      exclude_extensions: [".png", ".jpg", ".zip", ".gz", ".lock"]
++      exclude_paths: ["node_modules/", ".venv/", ".git/", "dist/", "build/"]
++  transformers:
++    - class: "src.github.transformers.GitHubFileTransformer"
++      params:
++        app_id: "6"
++        installation_id: "1"
++        base_url: "https://001070.xyz/api/v3"
++        private_key_secret_name: "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
++        enterprise_slug: "MyReddit"
++        is_public: false
++        identity_mapper:
++          class: "src.github.identity.UnifiedRepositoryIdentityMapper"
++          params:
++            config_file: "src/github/identity/basic_mapping/acl.yaml"
++  uploader:
++    class: "src.core.gcp_uploaders.GoogleCloudDiscoveryEngineDocumentUploader"
++    params:
++      project_id: "rrolando-agentspace-3245"
++      data_store_id: "reddit-docs-ds"
++      location: "global"
++      branch_id: "default_branch"
++      gcs_bucket: "reddit-gep-cc-12378-connector-sources"
++
++deployment:
++  job_name: "reddit-docs-sync"
++  cron_schedule: "0 2 * * *"
++  reconciliation_mode: "INCREMENTAL"
++  cache_bucket_name: "reddit-gep-cc-12378-connector-cache"
++  secret_accessor_ids:
++    - "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
++  env_vars:
++    GITHUB_PRIVATE_KEY_SECRET: "projects/reddit-gep-cc-12378/secrets/ghes-app-private-key/versions/latest"
++    GITHUB_APP_ID: "6"
++    GITHUB_INSTALLATION_ID: "1"
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/pipelines/live_snooguts_mission_control.yaml.disabled /home/admin_/pruebasCC/gep-custom-connectors/pipelines/live_snooguts_mission_control.yaml.disabled
+--- /tmp/original_extract/gep-custom-connectors/pipelines/live_snooguts_mission_control.yaml.disabled	1970-01-01 00:00:00.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/pipelines/live_snooguts_mission_control.yaml.disabled	2026-07-01 14:03:50.536217009 +0000
+@@ -0,0 +1,26 @@
++pipeline:
++  name: "Snooguts Mission Control Ingestion"
++  type: "document"
++  fetcher:
++    class: "src.bigquery.fetchers.BigQuerySnoogutsFetcher"
++    params:
++      project_id: "your-project-id"
++      dataset_id: "your_dataset_id"
++      tables: ["initiatives", "commitments", "launches", "person", "user"]
++  transformers:
++    - class: "src.bigquery.transformers.SnoogutsTransformer"
++      params:
++        datasource: "snoogutsmissioncontrol"
++  uploader:
++    class: "src.core.gcp_uploaders.GoogleCloudDiscoveryEngineDocumentUploader"
++    params:
++      project_id: "your-project-id"
++      data_store_id: "snooguts-ds"
++      location: "global"
++      branch_id: "default_branch"
++      gcs_bucket: "your-gcs-bucket"
++
++deployment:
++  job_name: "snooguts-mission-control-sync"
++  cron_schedule: "0 * * * *"
++  reconciliation_mode: "INCREMENTAL"
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/prepare_bq_data.py /home/admin_/pruebasCC/gep-custom-connectors/prepare_bq_data.py
+--- /tmp/original_extract/gep-custom-connectors/prepare_bq_data.py	1970-01-01 00:00:00.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/prepare_bq_data.py	2026-07-01 14:08:10.725081113 +0000
+@@ -0,0 +1,41 @@
++# Copyright 2024 Google. This software is provided as-is, without warranty or representation for any use or purpose. Your use of it is subject to your agreement with Google.
++
++import json
++import os
++
++def split_mock_data(input_file):
++    with open(input_file, 'r') as f:
++        data = json.load(f)
++    
++    tables = {
++        "initiatives": [],
++        "commitments": [],
++        "launches": [],
++        "person": [],
++        "user": []
++    }
++    
++    for item in data:
++        entity_type = item.get("entityType")
++        if entity_type == "initiative":
++            tables["initiatives"].append(item)
++        elif entity_type == "commitment":
++            tables["commitments"].append(item)
++        elif entity_type == "launch":
++            tables["launches"].append(item)
++        elif entity_type == "person":
++            tables["person"].append(item)
++        elif entity_type == "user":
++            tables["user"].append(item)
++            
++    os.makedirs("bq_load", exist_ok=True)
++    
++    for table_name, rows in tables.items():
++        if rows:
++            with open(f"bq_load/{table_name}.jsonl", "w") as f:
++                for row in rows:
++                    f.write(json.dumps(row) + "\n")
++            print(f"Created bq_load/{table_name}.jsonl with {len(rows)} rows.")
++
++if __name__ == "__main__":
++    split_mock_data("mock_data.json")
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/pyproject.toml /home/admin_/pruebasCC/gep-custom-connectors/pyproject.toml
+--- /tmp/original_extract/gep-custom-connectors/pyproject.toml	2026-06-18 00:19:05.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/pyproject.toml	2026-07-01 15:42:08.849211580 +0000
+@@ -9,6 +9,7 @@
+     "google-cloud-storage>=2.10.0",
+     "google-cloud-discoveryengine>=0.11.0",
+     "google-cloud-secret-manager>=2.16.0",
++    "google-cloud-bigquery>=3.10.0",
+     "pyyaml>=6.0",
+     "pyopenssl",
+     "requests>=2.28.0",
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/src/bigquery/fetchers.py /home/admin_/pruebasCC/gep-custom-connectors/src/bigquery/fetchers.py
+--- /tmp/original_extract/gep-custom-connectors/src/bigquery/fetchers.py	1970-01-01 00:00:00.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/src/bigquery/fetchers.py	2026-07-01 14:03:10.333911794 +0000
+@@ -0,0 +1,63 @@
++# Copyright 2024 Google. This software is provided as-is, without warranty or representation for any use or purpose. Your use of it is subject to your agreement with Google.
++
++import logging
++from typing import Generator, List, Optional
++from google.cloud import bigquery
++from ..core.base import BaseDocumentFetcher
++from ..core.models import RawPayload, PipelineContext
++
++logger = logging.getLogger("connector.bigquery.fetchers")
++
++class BigQuerySnoogutsFetcher(BaseDocumentFetcher):
++    """
++    Fetcher for Snooguts Mission Control data stored in BigQuery.
++    Queries tables for Initiatives, Commitments, Launches, and OrgData.
++    """
++    def __init__(
++        self, 
++        project_id: str, 
++        dataset_id: str, 
++        tables: Optional[List[str]] = None,
++        query_override: Optional[str] = None
++    ):
++        self.project_id = project_id
++        self.dataset_id = dataset_id
++        self.tables = tables or ["initiatives", "commitments", "launches", "person", "user"]
++        self.query_override = query_override
++        self.client = bigquery.Client(project=project_id)
++
++    def fetch(self, context: PipelineContext) -> Generator[RawPayload, None, None]:
++        if self.query_override:
++            logger.info(f"Executing query override in {self.project_id}.{self.dataset_id}")
++            query_job = self.client.query(self.query_override)
++            for row in query_job:
++                yield RawPayload(data=dict(row))
++            return
++
++        for table_name in self.tables:
++            table_ref = f"{self.project_id}.{self.dataset_id}.{table_name}"
++            logger.info(f"Fetching data from BigQuery table: {table_ref}")
++            
++            query = f"SELECT * FROM `{table_ref}`"
++            try:
++                query_job = self.client.query(query)
++                count = 0
++                for row in query_job:
++                    # Convert BigQuery Row to dict
++                    data = dict(row)
++                    # Ensure entityType is present if not in table
++                    if "entityType" not in data:
++                        if table_name == "person":
++                            data["entityType"] = "person"
++                        elif table_name == "user":
++                            data["entityType"] = "user"
++                        else:
++                            # Singularize table name if it ends with 's'
++                            data["entityType"] = table_name[:-1] if table_name.endswith('s') else table_name
++                    
++                    yield RawPayload(data=data)
++                    count += 1
++                logger.info(f"Successfully fetched {count} records from {table_name}")
++            except Exception as e:
++                logger.error(f"Failed to fetch data from {table_ref}: {e}")
++                context.record_error("BigQueryFetcher", table_name, e)
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/src/bigquery/__init__.py /home/admin_/pruebasCC/gep-custom-connectors/src/bigquery/__init__.py
+--- /tmp/original_extract/gep-custom-connectors/src/bigquery/__init__.py	1970-01-01 00:00:00.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/src/bigquery/__init__.py	2026-07-01 14:03:03.465176230 +0000
+@@ -0,0 +1 @@
++# Copyright 2024 Google. This software is provided as-is, without warranty or representation for any use or purpose. Your use of it is subject to your agreement with Google.
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/src/bigquery/transformers.py /home/admin_/pruebasCC/gep-custom-connectors/src/bigquery/transformers.py
+--- /tmp/original_extract/gep-custom-connectors/src/bigquery/transformers.py	1970-01-01 00:00:00.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/src/bigquery/transformers.py	2026-07-01 15:04:35.022260469 +0000
+@@ -0,0 +1,306 @@
++# Copyright 2024 Google. This software is provided as-is, without warranty or representation for any use or purpose. Your use of it is subject to your agreement with Google.
++
++import json
++import logging
++import re
++import datetime
++from typing import Optional, Dict, Any, List
++from google.cloud import discoveryengine_v1 as discoveryengine
++from ..core.base import BaseDocumentTransformer
++from ..core.models import RawPayload, PipelineContext
++
++logger = logging.getLogger("connector.bigquery.transformers")
++
++class DateTimeEncoder(json.JSONEncoder):
++    def default(self, obj):
++        if isinstance(obj, (datetime.datetime, datetime.date)):
++            return obj.isoformat()
++        return super().default(obj)
++
++def _json_dumps(obj: Any) -> str:
++    return json.dumps(obj, cls=DateTimeEncoder)
++
++def _convert_datetimes(obj: Any) -> Any:
++    if isinstance(obj, (datetime.datetime, datetime.date)):
++        return obj.isoformat()
++    if isinstance(obj, dict):
++        return {k: _convert_datetimes(v) for k, v in obj.items()}
++    if isinstance(obj, list):
++        return [_convert_datetimes(i) for i in obj]
++    return obj
++
++def _sanitize_doc_id(doc_id: str) -> str:
++    """Sanitizes document IDs to strictly conform to Discovery Engine constraints: ^[a-zA-Z0-9-_]+$"""
++    return re.sub(r'[^a-zA-Z0-9-_]', '_', str(doc_id))
++
++class SnoogutsTransformer(BaseDocumentTransformer):
++    """
++    Transforms Snooguts Mission Control raw payloads into Discovery Engine Documents.
++    Follows the schema defined in sync_schema.txt.
++    """
++    def __init__(self, datasource: str = "snoogutsmissioncontrol"):
++        self.datasource = datasource
++
++    def transform(self, data: RawPayload, context: PipelineContext) -> Optional[discoveryengine.Document]:
++        payload = _convert_datetimes(data.data)
++        if not isinstance(payload, dict):
++            return None
++        
++        entity_type = payload.get("entityType")
++        if not entity_type:
++            return None
++            
++        action = payload.get("action", "upsert")
++        if action == "delete":
++            # Pipeline currently handles upserts; deletes are handled via separate sync path.
++            return None
++
++        if entity_type == "initiative":
++            return self._transform_initiative(payload)
++        elif entity_type == "commitment":
++            return self._transform_commitment(payload)
++        elif entity_type == "launch":
++            return self._transform_launch(payload)
++        elif entity_type == "person":
++            return self._transform_person(payload)
++            
++        return None
++
++    def _build_acl_info(self, payload: Dict[str, Any]) -> Optional[discoveryengine.Document.AclInfo]:
++        is_private = payload.get("private", False)
++        allowed_users = payload.get("allowedUsers", [])
++        
++        if not is_private:
++            return discoveryengine.Document.AclInfo(
++                readers=[discoveryengine.Document.AclInfo.AccessRestriction(idp_wide=True)]
++            )
++        
++        principals = []
++        for email in allowed_users:
++            principal = discoveryengine.Principal(user_id=email)
++            principals.append(principal)
++            
++        if not principals:
++            # If private but no allowed users, it's effectively restricted to owner or nothing.
++            # Discovery Engine needs at least one principal or idp_wide.
++            # We might want to add the ownerEmail here.
++            owner = payload.get("ownerEmail")
++            if owner:
++                principals.append(discoveryengine.Principal(user_id=owner))
++            else:
++                return None
++                
++        return discoveryengine.Document.AclInfo(
++            readers=[discoveryengine.Document.AclInfo.AccessRestriction(principals=principals)]
++        )
++
++    def _transform_initiative(self, payload: Dict[str, Any]) -> discoveryengine.Document:
++        program_id = payload.get("id")
++        doc_id = f"initiative-{program_id}"
++        
++        struct_data = {
++            "datasource": self.datasource,
++            "objectType": "Initiatives",
++            "id": doc_id,
++            "title": payload.get("title", ""),
++            "viewURL": payload.get("url", f"https://launch.snooguts.net/programs/{program_id}"),
++            "createdAt": payload.get("createdAt"),
++            "updatedAt": payload.get("updatedAt"),
++            "author": {"email": payload.get("ownerEmail", "mission.control.internal.user@reddit.com")},
++        }
++        
++        custom_props = []
++        prop_map = {
++            "startDate": "startDate",
++            "endDate": "endDate",
++            "programStatus": "programStatus",
++            "primaryPillar": "primaryPillar",
++            "activeQuarters": "activeQuarters",
++            "linkedLaunchIds": "linkedLaunchIds",
++            "linkedCommitmentIds": "linkedCommitmentIds",
++        }
++        json_map = {
++            "hierarchyTeam": "hierarchyTeam",
++            "statusLogs": "statusLogsJSONString",
++            "links": "linksJSONString",
++            "decisions": "decisionsJSONString",
++            "risks": "risksJsonString",
++            "resources": "resourcesJsonString",
++        }
++        
++        for src, target in prop_map.items():
++            val = payload.get(src)
++            if val is not None:
++                custom_props.append({"name": target, "value": val})
++        for src, target in json_map.items():
++            val = payload.get(src)
++            if val is not None:
++                custom_props.append({"name": target, "value": _json_dumps(val)})
++                
++        struct_data["customProperties"] = custom_props
++        if "interactions" in payload:
++            struct_data["interactions"] = payload["interactions"]
++            
++        return discoveryengine.Document(
++            id=_sanitize_doc_id(doc_id),
++            struct_data=struct_data,
++            content=discoveryengine.Document.Content(
++                mime_type="text/plain",
++                raw_bytes=payload.get("description", "").encode("utf-8")
++            ),
++            acl_info=self._build_acl_info(payload)
++        )
++
++    def _transform_commitment(self, payload: Dict[str, Any]) -> discoveryengine.Document:
++        sc_id = payload.get("id")
++        doc_id = f"commitment-{sc_id}"
++        
++        struct_data = {
++            "datasource": self.datasource,
++            "objectType": "Commitments",
++            "id": doc_id,
++            "title": payload.get("title", ""),
++            "viewURL": payload.get("url", f"https://launch.snooguts.net/commitment/{sc_id}"),
++            "createdAt": payload.get("createdAt"),
++            "updatedAt": payload.get("updatedAt"),
++            "author": {"email": payload.get("ownerEmail", "mission.control.internal.user@reddit.com")},
++        }
++        
++        custom_props = []
++        prop_map = {
++            "responsibleUser": "responsibleUser",
++            "accountableUser": "accountableUser",
++            "quarter": "quarter",
++            "pillar": "pillar",
++            "commitmentStatus": "commitmentStatus",
++            "isClosedOut": "isClosedOut",
++        }
++        if "isClosedOut" in payload:
++            payload["isClosedOut"] = str(payload["isClosedOut"])
++            
++        for src, target in prop_map.items():
++            val = payload.get(src)
++            if val is not None:
++                custom_props.append({"name": target, "value": val})
++                
++        if "statusHistory" in payload:
++            custom_props.append({"name": "statusHistoryJsonString", "value": _json_dumps(payload["statusHistory"])})
++            
++        struct_data["customProperties"] = custom_props
++        if "interactions" in payload:
++            struct_data["interactions"] = payload["interactions"]
++            
++        return discoveryengine.Document(
++            id=_sanitize_doc_id(doc_id),
++            struct_data=struct_data,
++            content=discoveryengine.Document.Content(
++                mime_type="text/plain",
++                raw_bytes=payload.get("description", "").encode("utf-8")
++            ),
++            acl_info=self._build_acl_info(payload)
++        )
++
++    def _transform_launch(self, payload: Dict[str, Any]) -> discoveryengine.Document:
++        l_id = payload.get("id")
++        doc_id = f"launch-{l_id}"
++        
++        struct_data = {
++            "datasource": self.datasource,
++            "objectType": "Launches",
++            "id": doc_id,
++            "title": payload.get("title", ""),
++            "viewURL": payload.get("url", f"https://launch.snooguts.net/launch/{l_id}"),
++            "createdAt": payload.get("createdAt"),
++            "updatedAt": payload.get("updatedAt"),
++            "author": {"email": payload.get("ownerEmail", "mission.control.internal.user@reddit.com")},
++        }
++        
++        custom_props = []
++        prop_map = {
++            "launchDate": "launchDate",
++            "committedQuarter": "committedQuarter",
++            "platforms": "platforms",
++            "productSurfaces": "productSurfaces",
++            "pillars": "pillars",
++        }
++        for src, target in prop_map.items():
++            val = payload.get(src)
++            if val is not None:
++                custom_props.append({"name": target, "value": val})
++                
++        if "reviews" in payload:
++            custom_props.append({"name": "reviewsJsonString", "value": _json_dumps(payload["reviews"])})
++        if "commitmentIds" in payload:
++            custom_props.append({"name": "commitmentID", "value": _json_dumps([f"commitment-{cid}" for cid in payload["commitmentIds"]])})
++        if "links" in payload:
++            custom_props.append({"name": "links", "value": [_json_dumps(link) for link in payload["links"]]})
++        if "statusLogs" in payload:
++            custom_props.append({"name": "statusLogsJsonString", "value": _json_dumps(payload["statusLogs"])})
++            
++        struct_data["customProperties"] = custom_props
++        if "interactions" in payload:
++            struct_data["interactions"] = payload["interactions"]
++            
++        return discoveryengine.Document(
++            id=_sanitize_doc_id(doc_id),
++            struct_data=struct_data,
++            content=discoveryengine.Document.Content(
++                mime_type="text/plain",
++                raw_bytes=payload.get("description", "").encode("utf-8")
++            ),
++            acl_info=self._build_acl_info(payload)
++        )
++
++    def _transform_person(self, payload: Dict[str, Any]) -> discoveryengine.Document:
++        p_id = payload.get("id")
++        doc_id = f"person-{p_id}"
++        
++        struct_data = {
++            "datasource": self.datasource,
++            "objectType": "OrgData",
++            "id": doc_id,
++            "title": payload.get("title", ""), # title is email in mock
++            "viewURL": payload.get("url", f"https://launch.snooguts.net/org?u={payload.get('employeeId')}"),
++            "createdAt": payload.get("createdAt"),
++            "updatedAt": payload.get("updatedAt"),
++            "author": {"email": payload.get("email")},
++        }
++        
++        custom_props = []
++        prop_map = {
++            "managerEmail": "managerEmail",
++            "directorEmail": "directorEmail",
++            "executiveEmail": "executiveEmail",
++            "function": "function",
++            "specialties": "specialties",
++            "pillar": "pillar",
++            "email": "email",
++            "displayName": "displayName",
++            "positionId": "positionId",
++            "positionStatus": "positionStatus",
++            "employeeId": "employeeId",
++            "level": "level",
++            "hierarchyTeam": "hierarchyTeam",
++            "assignedToTeam": "assignedToTeam",
++        }
++        for src, target in prop_map.items():
++            val = payload.get(src)
++            if val is not None:
++                custom_props.append({"name": target, "value": val})
++                
++        struct_data["customProperties"] = custom_props
++        if "interactions" in payload:
++            struct_data["interactions"] = payload["interactions"]
++            
++        # OrgData usually allows anonymous access according to sync_schema.txt
++        return discoveryengine.Document(
++            id=_sanitize_doc_id(doc_id),
++            struct_data=struct_data,
++            content=discoveryengine.Document.Content(
++                mime_type="text/plain",
++                raw_bytes=payload.get("description", "").encode("utf-8")
++            ),
++            acl_info=discoveryengine.Document.AclInfo(
++                readers=[discoveryengine.Document.AclInfo.AccessRestriction(idp_wide=True)]
++            )
++        )
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/sync_schema.txt /home/admin_/pruebasCC/gep-custom-connectors/sync_schema.txt
+--- /tmp/original_extract/gep-custom-connectors/sync_schema.txt	1970-01-01 00:00:00.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/sync_schema.txt	2026-07-01 13:53:14.379093414 +0000
+@@ -0,0 +1,214 @@
++1) Bulk document sync (cron job)
++--------------------------------
++
++Payload shape:
++{
++  "uploadId": string (uuid),
++  "datasource": "snoogutsmissioncontrol",
++  "documents": [Document, ...],          # batched, size <= 10
++  "forceRestartUpload": boolean,              # true only on first page
++  "isFirstPage": boolean,                     # true only on first page
++  "isLastPage": boolean                       # true only on final page
++}
++
++Bulk object types uploaded:
++- "OrgData" (from Position records)
++- "Initiatives" (from Program records)
++- "Commitments" (from StrategicCommitmentsItem records)
++- "Launches" (from Launch records)
++
++Cron flow:
++- OrgData uploaded first
++- Initiatives uploaded second
++- Commitments uploaded third
++- Launches uploaded fourth
++- Referenced users are separately indexed through /indexuser during initiative/commitment/launch batches
++
++
++2) Single-document sync (event-driven updates)
++----------------------------------------------
++
++Payload shape:
++{
++  "document": Document
++}
++
++Supported document ids and prefixes:
++- initiative-{program_id}
++- commitment-{strategic_commitment_id}
++- launch-{launch_id}
++- person-{position_id}
++
++
++3) Document delete sync (event-driven deletes/archives)
++-------------------------------------------------------
++Endpoint used:
++- POST /api/index/v1/deletedocument
++
++Payload shape:
++{
++  "datasource": "snoogutsmissioncontrol",
++  "id": string  # one of the prefixed ids listed above
++}
++
++
++4) User indexing sync (referenced users)
++----------------------------------------
++
++Payload shape:
++{
++  "version": 0,
++  "datasource": "snoogutsmissioncontrol",
++  "user": {
++    "email": string,
++    "userId": string,     # same value as email
++    "name": string,
++    "isActive": boolean
++  }
++}
++
++When user indexing is triggered:
++- During initiative/commitment/launch sync:
++  - author email
++  - permissions.allowedUsers emails (when present)
++- De-duplicated in-process via INDEXED_USERS set
++
++
++5) Common Document structure
++---------------------------------
++All document object types share this base shape:
++
++{
++  "datasource": "snoogutsmissioncontrol",
++  "objectType": "Initiatives" | "Commitments" | "Launches" | "OrgData",
++  "id": string,
++  "title": string,
++  "body": {
++    "mimeType": "text/plain",
++    "textContent": string
++  },
++  "viewURL": string,
++  "createdAt": integer | null,   # epoch seconds
++  "updatedAt": integer | null,   # epoch seconds
++  "permissions": {
++    "allowAnonymousAccess": boolean,
++    "allowedUsers"?: [{ "email": string }, ...],
++    "allowedGroups"?: [{ "id": string }, ...]
++  },
++  "customProperties": [{ "name": string, "value": any }, ...],
++  "author": { "email": string },
++  "interactions"?: {
++    "numLikes": integer,
++    "numComments": integer,
++    "numViews": integer
++  }
++}
++
++Permissions behavior from mapper:
++- allowAnonymousAccess is true when source private flag is missing/false
++- allowAnonymousAccess is false when source private flag is true
++- allowedUsers is only included when:
++  - private is true, and
++  - allowed_users has at least one email
++- allowedGroups exists in mapper support but is not currently populated by this sync path
++
++Custom properties behavior:
++- properties are included only when their mapped value is truthy
++- empty strings/lists/null values are omitted
++
++
++6) Initiatives document schema
++------------------------------
++objectType: "Initiatives"
++id format: "initiative-{program_id}"
++viewURL format: "https://launch.snooguts.net/programs/{program_id}"
++author email source:
++- program owner email, or fallback "mission.control.internal.user@reddit.com"
++
++customProperties names and value types:
++- startDate: string
++- endDate: string
++- programStatus: string
++- hierarchyTeam: string (JSON-encoded array)
++- statusLogsJSONString: string (JSON-encoded array)
++- linksJSONString: string (JSON-encoded array)
++- decisionsJSONString: string (JSON-encoded array)
++- activeQuarters: array[string]
++- primaryPillar: string
++- linkedLaunchIds: array[string]          # launch-{id}
++- linkedCommitmentIds: array[string]      # commitment-{id}
++- risksJsonString: string (JSON-encoded array)
++- resourcesJsonString: string (JSON-encoded array)
++
++
++7) Commitments document schema
++------------------------------
++objectType: "Commitments"
++id format: "commitment-{strategic_commitment_id}"
++viewURL format: "https://launch.snooguts.net/commitment/{strategic_commitment_id}"
++author email source:
++- sc owner email, or fallback "mission.control.internal.user@reddit.com"
++
++customProperties names and value types:
++- responsibleUser: string
++- accountableUser: string
++- quarter: string                 # format Q{quarter}-{year}
++- pillar: string
++- commitmentStatus: array[string]
++- isClosedOut: string             # "True" / "False"
++- statusHistoryJsonString: string (JSON-encoded array)
++
++Additional notes:
++- records without a resolvable parent pillar are skipped (not sent)
++
++
++8) Launches document schema
++---------------------------
++objectType: "Launches"
++id format: "launch-{launch_id}"
++viewURL format: "https://launch.snooguts.net/launch/{launch_id}"
++author email source:
++- launch owner email, or fallback "mission.control.internal.user@reddit.com"
++
++customProperties names and value types:
++- reviewsJsonString: array[string]    # array with one JSON stringified review list
++- launchDate: string                  # ISO-8601 from launch end_date
++- committedQuarter: string            # mapped if present
++- commitmentID: string                # JSON-encoded list of commitment-{id}
++- platforms: array[string]
++- productSurfaces: array[string]
++- pillars: array[string]
++- links: array[string]                # each element is JSON-encoded link object
++- statusLogsJsonString: string (JSON-encoded array)
++
++Important current-behavior note:
++- launch formatter provides "subpillars", but mapper expects "pillars"
++- result: "pillars" custom property is currently omitted unless mapper input changes
++
++
++9) OrgData (Users) document schema
++--------------------------
++objectType: "OrgData"
++id format: "person-{position_id}"
++viewURL format: "https://launch.snooguts.net/org?u={employee_id}"
++author email source:
++- employee email
++
++customProperties names and value types:
++- managerEmail: string
++- directorEmail: string
++- executiveEmail: string
++- function: string
++- specialties: array[string]
++- pillar: string
++- email: string
++- displayName: string
++- positionId: integer | string
++- positionStatus: string
++- employeeId: string
++- level: string
++- hierarchyTeam: string
++- assignedToTeam: string
++
++permissions:
++- currently maps to allowAnonymousAccess=true (no private field passed in org mapper)
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/terraform/jobs/main.tf /home/admin_/pruebasCC/gep-custom-connectors/terraform/jobs/main.tf
+--- /tmp/original_extract/gep-custom-connectors/terraform/jobs/main.tf	2026-06-18 00:19:05.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/terraform/jobs/main.tf	2026-07-01 15:32:57.774467595 +0000
+@@ -6,7 +6,6 @@
+       version = ">= 4.0.0"
+     }
+   }
+-  backend "gcs" {}
+ }
+ 
+ provider "google" {
+diff -ruN '--exclude=.git' '--exclude=__pycache__' '--exclude=.venv' '--exclude=.terraform' '--exclude=*.jsonl' '--exclude=bq_load' '--exclude=MODIFICATIONS_LOG.md' '--exclude=DEPLOYMENT_GUIDE.md' '--exclude=test_snooguts_mock.yaml' '--exclude=.terraform.lock.hcl' '--exclude=terraform.tfstate*' '--exclude=out' /tmp/original_extract/gep-custom-connectors/terraform/modules/ingestion-pipeline/main.tf /home/admin_/pruebasCC/gep-custom-connectors/terraform/modules/ingestion-pipeline/main.tf
+--- /tmp/original_extract/gep-custom-connectors/terraform/modules/ingestion-pipeline/main.tf	2026-06-18 00:19:05.000000000 +0000
++++ /home/admin_/pruebasCC/gep-custom-connectors/terraform/modules/ingestion-pipeline/main.tf	2026-07-01 15:14:46.605631394 +0000
+@@ -117,6 +117,19 @@
+   member  = "serviceAccount:${google_service_account.job_sa.email}"
+ }
+ 
++# Grant the Job Service Account permission to read from BigQuery
++resource "google_project_iam_member" "bigquery_viewer" {
++  project = var.project_id
++  role    = "roles/bigquery.dataViewer"
++  member  = "serviceAccount:${google_service_account.job_sa.email}"
++}
++
++resource "google_project_iam_member" "bigquery_job_user" {
++  project = var.project_id
++  role    = "roles/bigquery.jobUser"
++  member  = "serviceAccount:${google_service_account.job_sa.email}"
++}
++
+ # Grant the Job Service Account permission to read/write to the GCS bucket
+ resource "google_storage_bucket_iam_member" "gcs_bucket_admin" {
+   count  = var.gcs_bucket_name != "" ? 1 : 0

@@ -1,0 +1,70 @@
+steps:
+  # 1. Validate Stage (Verify YAML configuration syntax)
+  - name: 'python:3.11-slim'
+    id: 'validate-pipeline'
+    entrypoint: 'python3'
+    args:
+      - '-c'
+      - |
+        import glob, sys
+        try:
+            import yaml
+        except ImportError:
+            import subprocess
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "--quiet", "pyyaml"])
+            import yaml
+        
+        files = glob.glob('pipelines/*.yaml') + glob.glob('pipelines/*.yml')
+        for f in files:
+            yaml.safe_load(open(f))
+        print(f"Successfully validated {len(files)} pipeline YAML definition files.")
+
+  # 2. Build Stage (Official Cloud Build Docker builder)
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-image'
+    args:
+      - 'build'
+      - '-t'
+      - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/custom-connectors:$COMMIT_SHA'
+      - '-t'
+      - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/custom-connectors:latest'
+      - '.'
+
+  # 3. Push Stage (Official Cloud Build Docker builder)
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-image'
+    args:
+      - 'push'
+      - '--all-tags'
+      - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/custom-connectors'
+
+  # 4. Terraform Init Stage (Official HashiCorp Terraform builder)
+  - name: 'hashicorp/terraform:1.10.0'
+    id: 'tf-init'
+    dir: 'terraform/jobs'
+    args:
+      - 'init'
+      - '-reconfigure'
+      - '-backend-config=bucket=$_TF_BACKEND_BUCKET'
+      - '-backend-config=prefix=terraform/state/jobs'
+
+  # 5. Terraform Apply Stage (Official HashiCorp Terraform builder)
+  - name: 'hashicorp/terraform:1.10.0'
+    id: 'tf-apply'
+    dir: 'terraform/jobs'
+    args:
+      - 'apply'
+      - '-auto-approve'
+      - '-var=project_id=$PROJECT_ID'
+      - '-var=region=$_REGION'
+      - '-var=image_uri=$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/custom-connectors:$COMMIT_SHA'
+
+substitutions:
+  _REGION: 'us-central1'
+  _REPO_NAME: 'gep-custom-connectors'
+  _TF_BACKEND_BUCKET: 'reddit-gep-cc-12378-tf-state'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+serviceAccount: 'projects/$PROJECT_ID/serviceAccounts/cd-pipeline-runner@$PROJECT_ID.iam.gserviceaccount.com'

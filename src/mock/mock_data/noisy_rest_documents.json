@@ -1,0 +1,42 @@
+[
+    {
+        "id": "doc-001",
+        "title": "Cymbal Group Employee Remote Work Policy & Handbook",
+        "content": "Cymbal Group Remote Work Policy & Guidelines.\n\nWelcome to the official remote work handbook for all Cymbal Group employees. This document outlines the expectations, tools, and compliance guidelines for employees working remotely or in a hybrid model.\n\n1. Core Working Hours\nTo ensure seamless collaboration, all employees are expected to be online and accessible during our core working hours of 10:00 AM to 3:00 PM EST, regardless of their physical location. Teams may adjust these hours internally if all members agree.\n\n2. Home Office Equipment Reimbursement\nCymbal Group offers a one-time stipend of up to $500 USD for setting up an ergonomic home office. This covers monitors, keyboards, mice, office chairs, and desk accessories. All receipts must be submitted via the expense portal within 30 days of purchase.\n\n3. Security and Compliance\n- Always connect to the corporate network using the Cymbal Secure VPN client.\n- Do not perform corporate work on personal, unmanaged devices.\n- Multi-Factor Authentication (MFA) is strictly required for accessing all G Suite and corporate internal tools.\n- Avoid working in public locations (like coffee shops) on open, unsecured Wi-Fi networks unless using your corporate mobile hotspot.",
+        "department_code": "Human-Resources",
+        "mime": "text/plain",
+        "version": "1.0_rest",
+        "database_cluster_node": "node-a",
+        "permissions": [
+            {"email": "admin@rrolando.altostrat.com", "type": "user"},
+            {"email": "test1@rrolando.altostrat.com", "type": "user"},
+            {"email": "test2@rrolando.altostrat.com", "type": "user"}
+        ]
+    },
+    {
+        "id": "doc-002",
+        "title": "Cymbal Next-Gen AI Platform (Project Aether) Architecture Design",
+        "content": "Cymbal Group - Project Aether Technical Architecture Design Document.\n\nProject Aether is the next-generation machine learning and AI platform designed to power Cymbal Retail's recommendation engine and customer support automation. This document describes the core cloud infrastructure and data flow.\n\n1. Technology Stack\n- Compute: Google Kubernetes Engine (GKE) for hosting custom microservices and FastAPI service layers, and Google Cloud Run for lightweight, event-driven jobs.\n- Database: Google Cloud Spanner is chosen for global relational transactional consistency across our regional retail endpoints.\n- AI/ML Layer: Google Cloud Vertex AI pipelines, using Gemini Pro models for semantic text analysis and customer intent matching.\n- Caching: Memorystore for Redis to cache database lookups and session state.\n\n2. Security and IAM Controls\n- All service-to-service communication is restricted via Istio Service Mesh with mTLS enabled.\n- Storage buckets holding raw customer transaction histories must have uniform bucket-level access enabled and be encrypted using Customer-Managed Encryption Keys (CMEK).\n- Access to Vertex AI training datasets is strictly governed by VPC Service Controls (VPC-SC) to prevent data exfiltration.",
+        "department_code": "Cloud-Architecture",
+        "mime": "text/plain",
+        "version": "1.0_rest",
+        "database_cluster_node": "node-a",
+        "permissions": [
+            {"email": "admin@rrolando.altostrat.com", "type": "user"},
+            {"email": "test1@rrolando.altostrat.com", "type": "user"}
+        ]
+    },
+    {
+        "id": "doc-003",
+        "title": "Cymbal Group Q3 Security Audit & Incident Response Protocol",
+        "content": "Confidential Document: Cymbal Group Information Security Incident Response Protocol.\n\nThis protocol defines the workflows and action steps to contain, eradicate, and recover from cybersecurity incidents affecting Cymbal infrastructure or customer data.\n\n1. Incident Classification\n- Severity 1 (Critical): Active data exfiltration, system-wide ransomware, or compromised admin credentials with write access to production database clusters.\n- Severity 2 (High): Unauthorized access to single staging environments, malware on employee laptop, or suspected data leakage.\n- Severity 3 (Medium/Low): Phishing attempts, port scanning, or minor service interruptions.\n\n2. Initial Response Actions (Severity 1/2)\n- The Security Operations Center (SOC) will immediately isolate the affected compute workloads (VMs or GKE pods).\n- Trigger a rolling credential rotation for all Service Accounts inside the affected GCP folder scope.\n- Create a dedicated war room in Google Chat including the VP of Engineering, Director of Security, and Legal counsel.\n- Log all actions and timeline details inside our secure audit storage repository.",
+        "department_code": "Security",
+        "mime": "text/plain",
+        "version": "1.0_rest",
+        "database_cluster_node": "node-b",
+        "permissions": [
+            {"email": "admin@rrolando.altostrat.com", "type": "user"},
+            {"email": "test2@rrolando.altostrat.com", "type": "user"}
+        ]
+    }
+]
