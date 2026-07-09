@@ -16,7 +16,7 @@ This is the guide as of the latest revision (v5). If you've followed an older re
 ```bash
 export PROJECT_ID="your-project-id"
 export REGION="us-central1"
-export DATASTORE_ID="snooguts-ds-v4"       # keep in sync with pipelines/test_snooguts_mock.yaml
+export DATASTORE_ID="snooguts-ds-v5"       # keep in sync with pipelines/test_snooguts_mock.yaml
 export STAGING_BUCKET="cc-mission-control"  # keep in sync with pipelines/test_snooguts_mock.yaml
 export DATASET_ID="snooguts_mock"
 
@@ -269,6 +269,7 @@ The transformer and fetcher emit named log events specifically for schema drift,
 ## Appendix: What changed since earlier revisions
 
 - **v3 → v4 (data store)**: `snooguts-ds-v2` used `contentConfig: CONTENT_REQUIRED` — every document was rejected with `INCORRECT_JSON_FORMAT`. Replaced by `snooguts-ds-v4` with `NO_CONTENT` + `aclEnabled: true`.
+- **v4 → v5 (IMS bound)**: `snooguts-ds-v5` adds an Identity Mapping Store binding (`snooguts-ims`) so `external_group:<name>` principals resolve at query time. The IMS binding is IMMUTABLE — this is why we couldn't just retrofit v4. `create_ds.py` provisions the IMS + example mappings + data store in one shot. A schema PATCH after data-store creation explicitly locks `customProperties.value` to plain `type: string` (no date auto-parse), preventing a "Invalid datetime" rejection when the first doc processed carries a date-shaped custom-property value.
 - **Bucket rename**: `creativestudiotest-492015-snooguts-staging` → `cc-mission-control` (globally unique-ish, no project prefix). Old bucket can be deleted after confirming no external consumer uses it.
 - **Transformer rewrite**: emits `json_data` (not `struct_data`), drops the always-empty `content` block, stringifies every `customProperties.value` (Discovery Engine locks that field to a single scalar type at first ingest), fixes the `commitment-commitment-<id>` double-prefix.
 - **Solution A**: `allowedGroups` principals now flow into `AclInfo`. Legacy rows without the column continue to work.

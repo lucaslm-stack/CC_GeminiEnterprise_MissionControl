@@ -178,3 +178,38 @@ Addresses the earlier finding that the connector was treating BigQuery as a dumb
 | INFO  | `connector.bigquery.fetchers`        | `Fetcher auto-discovered `                   |
 
 Recommended: alert on the three WARN patterns in Cloud Monitoring.
+
+## 12. IMS-Bound `snooguts-ds-v5` + Explicit Schema Lock (July 9, 2026)
+
+Closes the two loose ends from §11: (a) BQ tables were partially reloaded, and (b) `external_group:` semantics required an Identity Mapping Store binding that v4 didn't have.
+
+### 12.1 BQ tables — full reload
+All 5 tables (`initiatives`, `commitments`, `launches`, `person`, `user`) were `bq load --replace --autodetect`ed from the regenerated `bq_load/*.jsonl` files. `initiatives` now carries the `allowedGroups` REPEATED STRING column. The other four tables' schemas are unchanged (no `allowedGroups` in their mock data), but reloading them normalizes the round-trip through `prepare_bq_data.py`.
+
+### 12.2 New data store `snooguts-ds-v5` with IMS binding
+- **`create_ds.py` rewrite**: switched from raw HTTP to the official `google-cloud-discoveryengine` SDK, which handles wire-format quirks the REST endpoint refuses. Now provisions three resources idempotently:
+    1. `identityMappingStore/snooguts-ims`
+    2. Inline-imports the example mappings from `IMS_MAPPINGS` (currently maps `pillar-growth-leads` → `lead.one@example.com`, `exec.one@example.com`).
+    3. `dataStore/snooguts-ds-v5` with `identityMappingStore=<ims resource name>` bound. The IMS binding is immutable — it's why we couldn't retrofit v4.
+- **IMS resource-name quirk**: Discovery Engine rejects the IMS binding on a data store when the IMS resource name uses the project *id* instead of the project *number*. `create_ds.py` uses the project number for `ims_resource_name()`.
+- **Mock**: `mock_data.json` was flipped back to `external_group:pillar-growth-leads` (from the plain-email workaround used against v4).
+
+### 12.3 Explicit schema PATCH — sidesteps "Invalid datetime" auto-inference
+On a fresh v5, Discovery Engine's schema auto-inference locked `customProperties[].value` to a datetime-parseable type after processing a date-shaped string value (e.g. `startDate: "2026-10-01"`). Subsequent non-date values (`programStatus: "AT_RISK"`, JSON-encoded arrays like `["iOS","Android","Web"]`) were then rejected with `Invalid datetime <value>`.
+
+Fix: after `create_ds.py` provisions the data store, PATCH `schemas/default_schema` with an explicit JSON schema that declares every top-level field, every nested object field, and `customProperties[].value` as `type: string` with **no `format` hint**. This disables auto-format detection.
+
+The patched schema also formalizes `permissions.allowedGroups` shape, so future doc validation on group principals is unambiguous.
+
+### 12.4 Verification
+- LRO `import-documents-651508951951035793` on `snooguts-ds-v5`: `successCount=7, failureCount=None`, no error samples. Every document — including `initiative-101` with `groupId: external_group:pillar-growth-leads` — was accepted.
+- IMS list-mappings confirms both entries persisted.
+- ACL-enforced search behaves as expected for the fake test emails: made-up userInfo.userId matches only idp_wide docs (4 public). This is Discovery Engine's behavior with non-real IdP users and not something the connector can influence — real Google Workspace / Cloud Identity users in the tenant would trigger the group resolution through the IMS at query time.
+
+### 12.5 Pipeline + guide updates
+- `pipelines/test_snooguts_mock.yaml`: `data_store_id: snooguts-ds-v5`.
+- `DEPLOYMENT_GUIDE.md`: `DATASTORE_ID` env var + appendix updated to reflect the IMS bind + schema-PATCH step.
+
+### 12.6 Loose ends still open (intentionally not touched)
+- `snooguts-ds-v2` (CONTENT_REQUIRED) and `snooguts-ds-v4` (no IMS) remain in place. They are unreferenced by any pipeline; delete manually when convenient.
+- The two-hour delete grace on `snooguts-ds-v3` may or may not have elapsed by the time you read this; if you want that id back, retry `bq api ...` a couple of hours after the initial delete.

@@ -20,7 +20,7 @@ pipeline:
     class: "src.core.gcp_uploaders.GoogleCloudDiscoveryEngineDocumentUploader"
     params:
       project_id: "creativestudiotest-492015"
-      data_store_id: "snooguts-ds-v4"
+      data_store_id: "snooguts-ds-v5"
       location: "global"
       branch_id: "default_branch"
       gcs_bucket: "cc-mission-control"
