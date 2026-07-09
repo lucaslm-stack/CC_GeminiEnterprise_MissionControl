@@ -6,7 +6,12 @@ pipeline:
     params:
       project_id: "creativestudiotest-492015"
       dataset_id: "snooguts_mock"
-      tables: ["initiatives", "commitments", "launches", "person", "user"]
+      # Auto-discover every table in the dataset. New tables (e.g. `retros`)
+      # are picked up automatically; rows whose entityType has no transformer
+      # handler are dropped with a warning. Use `tables: [...]` to lock down
+      # the whitelist, or `table_pattern: "^(initiatives|commitments)$"` to
+      # opt in to a subset.
+      table_pattern: ".*"
   transformers:
     - class: "src.bigquery.transformers.SnoogutsTransformer"
       params:

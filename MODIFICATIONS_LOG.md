@@ -126,3 +126,55 @@ Cloud Run job logs reported `Uploaded: 11 items / Failed: 0`, but the target dat
 
 - **Remote**: `https://github.com/lucaslm-stack/CC_GeminiEnterprise_MissionControl`
 - **Local**: Repo initialized in `/home/admin_/pruebasCC/gep-custom-connectors`. First commit contains the full connector source, pipeline definitions, terraform, deployment guide, mock data, and the full modification history in this file.
+
+## 11. BigQuery ACL Awareness (Solutions A, B, C, D.1, E) (July 9, 2026)
+
+Addresses the earlier finding that the connector was treating BigQuery as a dumb row store with no visibility into BQ IAM / RLS / CLS. Five discrete solutions landed together.
+
+### 11.1 Solution A — `allowedGroups` principals flow into `AclInfo`
+- `src/bigquery/transformers.py::_build_permissions`: emits `permissions.allowedGroups` when `private=true` and the source row provides group ids.
+- `src/bigquery/transformers.py::_build_acl_info`: adds a `discoveryengine.Principal(group_id=...)` for every entry in `allowedGroups` alongside the existing `user_id` principals.
+- Legacy behavior preserved: rows without an `allowedGroups` column still work (default is empty list).
+- Two accepted formats documented in `sync_schema.txt §5` and `DEPLOYMENT_GUIDE.md §2.2`:
+    - `group@example.com` — plain Google Group, no IMS required.
+    - `external_group:<name>` — resolved via an Identity Mapping Store bound to the data store at creation time. Without the IMS binding, Discovery Engine rejects the document with "Request contains an invalid argument".
+
+### 11.2 Solution B — Schema drift detection
+- `src/bigquery/transformers.py::_log_schema_drift` runs after every successful transform. Any raw-payload key that isn't in the common envelope or the entity's declared prop set is logged once per `(entity_type, key)` pair at INFO with `"Schema drift: entity=..."`.
+- Also: unmapped entity types (`entityType='retro'` etc.) log once per type at WARN with `"No transformer branch for entityType=..."`.
+- New BQ columns are now visible instead of silently dropped.
+
+### 11.3 Solution C — BQ table auto-discovery
+- `src/bigquery/fetchers.py::_resolve_tables` accepts an optional `table_pattern` regex. When neither `tables` nor `table_pattern` is set, defaults to `.*` (all tables in the dataset).
+- `pipelines/test_snooguts_mock.yaml`: replaced hardcoded `tables:` list with `table_pattern: ".*"`. Adding a new BQ table now propagates automatically; unknown entityType surfaces as a WARN and the rows are dropped without failing the run.
+- `entity_type_overrides` param supported for cases where the default (table id, singularized) doesn't map to the transformer's expected entity type.
+
+### 11.4 Solution D.1 — ACL contract is a hard requirement
+- `src/bigquery/transformers.py::_build_acl_info`: rows with `private=true` and no `allowedUsers` / `allowedGroups` / `ownerEmail` are DROPPED with a WARN. Previously they would have shipped with a null-or-anyone ACL depending on how downstream interpreted an empty principal list.
+- Contract documented in `sync_schema.txt §5.1` and `DEPLOYMENT_GUIDE.md §2.1`.
+- `mock_data.json`: `initiative_private_full` now includes `allowedGroups: ["pillar-growth-leads@example.com"]` to exercise the group-principal path end-to-end.
+- `DEPLOYMENT_GUIDE.md §2.4`: explicit note that BigQuery RLS decisions must be flattened into `allowedUsers` / `allowedGroups` at load time — the connector cannot derive them.
+
+### 11.5 Solution E — Column-level security fallback
+- `src/bigquery/fetchers.py::_run_with_cls_fallback`: tries `SELECT *` first. On `Forbidden` errors that mention "policy" or "fine-grained", introspects the table schema for `policy_tags`, then retries `SELECT * EXCEPT (<tagged_cols>)` with a WARN and records the CLS event via `context.record_error("BigQueryFetcher.cls", ...)`.
+- No-op when no policy tags exist on the table (zero overhead).
+- Excluded columns arrive at the transformer as absent keys — surfaced by the drift detector at INFO. Silent data loss is impossible.
+- To opt in the values, grant the ingestion SA `roles/datacatalog.categoryFineGrainedReader` on the tag.
+
+### 11.6 Verification
+- Local smoke test against `mock_data.json`: 11 emitted, 6 dropped (4 deletes filtered + 2 unmapped `user` entries). Group principal survives to the emitted `AclInfo`. A synthetic private-no-principals row is correctly dropped. A synthetic unmapped entityType (`retro`) is correctly warned + dropped. A synthetic drifted key logs at INFO.
+- Container image `us-central1-docker.pkg.dev/creativestudiotest-492015/gep-custom-connectors/custom-connectors:v5-acl-e-1783555921` built via Cloud Build, deployed to Cloud Run Job `snooguts-mock-test-sync`.
+- BQ `snooguts_mock.initiatives` reloaded with the new `allowedGroups ARRAY<STRING>` column.
+- End-to-end run against `snooguts-ds-v4`: LRO `import-documents-13042443318456474669` returned `successCount: 7, failureCount: 0`, no error samples. All 7 unique documents (including the one with a group principal) accepted.
+- Fetcher logs confirmed `"Fetcher auto-discovered 5 tables in creativestudiotest-492015.snooguts_mock (pattern='.*'): [...]"`.
+
+### 11.7 New operational signals (alertable log substrings)
+| Level | Log source                           | Substring                                    |
+|-------|--------------------------------------|----------------------------------------------|
+| WARN  | `connector.bigquery.transformers`    | `Dropping doc `                              |
+| WARN  | `connector.bigquery.transformers`    | `No transformer branch for entityType=`      |
+| WARN  | `connector.bigquery.fetchers`        | `read denied on policy-tagged column(s)`     |
+| INFO  | `connector.bigquery.transformers`    | `Schema drift: entity=`                      |
+| INFO  | `connector.bigquery.fetchers`        | `Fetcher auto-discovered `                   |
+
+Recommended: alert on the three WARN patterns in Cloud Monitoring.

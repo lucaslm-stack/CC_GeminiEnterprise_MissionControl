@@ -13,6 +13,9 @@
       "lead.one@example.com",
       "exec.one@example.com"
     ],
+    "allowedGroups": [
+      "pillar-growth-leads@example.com"
+    ],
     "ownerEmail": "lead.one@example.com",
     "startDate": "2026-10-01",
     "endDate": "2027-01-31",

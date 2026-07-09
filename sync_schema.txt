@@ -110,7 +110,56 @@ Permissions behavior from mapper:
 - allowedUsers is only included when:
   - private is true, and
   - allowed_users has at least one email
-- allowedGroups exists in mapper support but is not currently populated by this sync path
+- allowedGroups is only included when:
+  - private is true, and
+  - allowed_groups has at least one group id (use `external_group:<name>`
+    prefix when the group resolves through an Identity Mapping Store)
+
+5.1) ACL contract (BigQuery source of truth)
+--------------------------------------------
+The connector runs as a single Cloud Run service account and cannot derive
+per-user visibility from BigQuery IAM, row-level security, or column-level
+security. Every row therefore MUST arrive with its effective ACL already
+materialized in these columns:
+
+- private BOOL                       required. Missing or false means public.
+- allowedUsers ARRAY<STRING>         optional. Google-recognized user emails.
+- allowedGroups ARRAY<STRING>        optional. Group ids.
+                                       * Plain Google-Groups email (e.g.
+                                         `admins@example.com`) — Discovery
+                                         Engine validates the format at ingest
+                                         and resolves membership at query
+                                         time. Works without any IMS setup.
+                                       * `external_group:<name>` — the group
+                                         is resolved via an Identity Mapping
+                                         Store bound to the data store. The
+                                         IMS binding is REQUIRED at data-store
+                                         creation time; without it Discovery
+                                         Engine rejects the document with
+                                         "Request contains an invalid
+                                         argument" at ingest.
+- ownerEmail STRING                  optional. Used as a last-resort principal
+                                     when a private row has no allowedUsers /
+                                     allowedGroups.
+
+Enforcement (transformer):
+- private=false                 -> Document is idp_wide readable.
+- private=true, principals=[]   -> Document is DROPPED with a warning. This is
+                                   the fail-safe: rather than shipping a row
+                                   with implicit anyone-can-read access, the
+                                   connector refuses it. Materialize the ACL at
+                                   the BQ-load step.
+- private=true, principals!=[]  -> Document readers = union of allowedUsers +
+                                   allowedGroups (+ ownerEmail if the two
+                                   allowed lists were empty).
+
+Column-level security:
+- If a BigQuery column carries a Data Catalog policy tag, the fetcher will
+  attempt SELECT * first and, on a fine-grained denial, retry
+  `SELECT * EXCEPT (<tagged_cols>)` and log a warning. The tagged column
+  arrives at the transformer as absent (schema drift detector will list it).
+  To include the values, grant the ingestion SA
+  `roles/datacatalog.categoryFineGrainedReader` on the tag.
 
 Custom properties behavior:
 - properties are included only when their mapped value is truthy
